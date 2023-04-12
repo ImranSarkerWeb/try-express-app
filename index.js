@@ -1,15 +1,24 @@
 const express = require("express");
+const phones = require("./phones.json");
 const app = express();
+
 const port = 5000;
 
 app.get("/", (req, res) => {
-  res.send("Hurrah, Just created my first app with express");
+  res.send("This is my first app using express.");
 });
 
-app.get("/data", (req, res) => {
-  res.send("The data will come soon!");
+app.get("/phones", (req, res) => {
+  res.send(phones);
 });
 
+//dynamically send data using id
+
+app.get("/phones/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  const phone = phones.find((phone) => phone.id === id) || {};
+  res.send(phone);
+});
 app.listen(port, () => {
-  console.log(`My app running with port ${port}`);
+  console.log(`My app is runningt at port: ${port}`);
 });
